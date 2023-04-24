@@ -3,7 +3,7 @@ import axios from 'axios'
 function Cards() {
     const [users, setUsers] = useState([])
     const [query, setQuery] = useState('')
-
+    const [followers, setFollowers] = useState([])
 
 
     const handleInputChange = (e) => {
@@ -12,17 +12,16 @@ function Cards() {
     };
 
     const handleSubmit = (e) =>{
-            e.preventDefault()
+        e.preventDefault()
         if(query.length > 0){
-            fetch(`https://api.github.com/search/users?q=${query}`)
-                .then((response) => response.json())
-                .then((data) => setUsers(data.items))
-                .catch((error) => console.log(error));
-        }
-        else{
-            setUsers([]);
-        }
+          fetch(`https://api.github.com/search/users?q=${query}`)
+            .then((response) => response.json())
+            .then((data) => setUsers(data.items))
 
+        } else {
+          setUsers([]);
+          setFollowers([]);
+        }
     }
 
 
@@ -44,8 +43,10 @@ function Cards() {
                             <div className="flex-shrink-0">
                                 <img className="h-12 w-12 rounded-full" src={user.avatar_url} alt={user.login} />
                             </div>
-                            <div className="ml-3">
-                                <a href={user.html_url} className="text-gray-800 font-semibold hover:text-blue-500">{user.login}</a>
+                            <div className="">
+                                <div className="ml-3">
+                                    <a href={user.html_url} className="text-gray-800 font-semibold hover:text-blue-500">{user.login}</a>
+                                </div>
                             </div>
                         </li>
                     );
